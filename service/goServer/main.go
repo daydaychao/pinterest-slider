@@ -46,8 +46,10 @@ func main() {
 	mux := http.NewServeMux()
 
 	// 添加路由與對應的處理函式
+	mux.HandleFunc("/init", controller.AppInit)
 	mux.HandleFunc("/login", controller.AppLogin)
 	mux.HandleFunc("/get", controller.AppSearch)
+	mux.HandleFunc("/screenshot", controller.AppScreenshot)
 
 	fmt.Printf("Server is running on port %s\n", port)
 

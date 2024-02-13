@@ -25,3 +25,7 @@ type ISliderData = {
   description: string
   autoAltText: string
 }
+
+type IScreenshot = {
+  screenshot: string
+}

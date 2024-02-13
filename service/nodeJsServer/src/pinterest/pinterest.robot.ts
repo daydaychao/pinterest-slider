@@ -111,6 +111,7 @@ const checkIsLoginByCookie = async (page: Page): Promise<boolean> => {
   }
 
   const cookies = await page?.context().cookies()
+  
 
   // 檢查是否存在名為 "_auth" 的 cookie
   const isLoggedIn = cookies.some((cookie) => {

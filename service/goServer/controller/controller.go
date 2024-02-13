@@ -11,9 +11,39 @@ func SendError(w http.ResponseWriter, errMsg string) {
 	http.Error(w, fmt.Sprintf("%s", errMsg), http.StatusInternalServerError)
 }
 
+func AppInit(w http.ResponseWriter, r *http.Request) {
+	// 初始化 Pinterest 服務
+	isInit, err := robot.InitService()
+	if err != nil {
+		SendError(w, "Error initialing service:"+err.Error())
+		return
+	}
+
+	// 構建回應
+	var code int
+	var msg string
+	if isInit != nil {
+		code = 200
+		msg = "Init OK"
+	} else {
+		code = 99
+		msg = "Init error"
+	}
+	response := map[string]interface{}{
+		"ok":      isInit,
+		"code":    code,
+		"data":    isInit,
+		"message": msg,
+	}
+
+	// 將回應轉換為 JSON 格式並發送
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
 func AppLogin(w http.ResponseWriter, r *http.Request) {
 	// 初始化 Pinterest 服務
-	_, err := robot.InitPinterestService()
+	_, err := robot.InitService()
 	if err != nil {
 		SendError(w, "Error initialing service:"+err.Error())
 		return
@@ -65,25 +95,58 @@ func AppSearch(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 構建回應
-	response := map[string]interface{}{
-		"ok": payload.Ok,
-		"code": func() int {
-			if payload.Ok {
-				return 200
-			}
-			return 99
-		}(),
-		"data": payload,
-		"message": func() string {
-			if payload.Ok {
-				return "Got data"
-			}
-			return "No data"
-		}(),
+	fmt.Println("got payload", payload)
+
+	var code int
+	var msg string
+	if payload.Ok {
+		code = 200
+		msg = "Got data"
+	} else {
+		code = 99
+		msg = "No data"
 	}
 
+	// 構建回應
+	response := map[string]interface{}{
+		"ok":      payload.Ok,
+		"code":    code,
+		"data":    payload,
+		"message": msg,
+	}
 	// 將回應轉換為 JSON 格式並發送
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
+}
+
+func AppScreenshot(w http.ResponseWriter, r *http.Request) {
+
+	// 截圖
+	payload, screenshot := robot.TakeScreenshot()
+	if screenshot == "" {
+		http.Error(w, "Error screenshot on Pinterest", http.StatusInternalServerError)
+		return
+	}
+
+	var code int
+	var msg string
+	if payload {
+		code = 200
+		msg = "Got data"
+	} else {
+		code = 99
+		msg = "No data"
+	}
+
+	// 構建回應
+	response := map[string]interface{}{
+		"ok":      payload,
+		"code":    code,
+		"data":    map[string]interface{}{"screenshot": screenshot},
+		"message": msg,
+	}
+	// 將回應轉換為 JSON 格式並發送
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+
 }

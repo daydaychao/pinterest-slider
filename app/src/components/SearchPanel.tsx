@@ -1,5 +1,5 @@
 import { Settings } from '../core/constants'
-import { appLogin, appSearch, appTriggerFullScreen } from '../core/controller'
+import { appInit, appLogin, appScreenshot, appSearch, appTriggerFullScreen } from '../core/controller'
 import useSliderStore from '../core/stores'
 import SearchInputUI from './SearchInputUI'
 
@@ -8,13 +8,19 @@ export const SearchPanel = () => {
   return (
     <main className="flex flex-col w-200px">
       <div></div>
+      <button onClick={appInit} disabled={isLoading}>
+        init
+      </button>
       <button onClick={appLogin} disabled={isLoading}>
-        命令機器人登入
+        機器人登入
       </button>
       <SearchInputUI cb={appSearch} disabled={isLoading} />
-      <button onClick={appTriggerFullScreen} disabled={!Settings.fullScreen}>
-        全螢幕切換
-      </button>
+      <button onClick={appScreenshot}>機器人拍截圖</button>
+      {Settings.fullScreen && (
+        <button onClick={appTriggerFullScreen} disabled={!Settings.fullScreen}>
+          全螢幕切換
+        </button>
+      )}
       <div></div>
     </main>
   )
