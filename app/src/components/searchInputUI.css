@@ -1,0 +1,29 @@
+.app-submit-wrapper {
+  border: 1px solid transparent;
+}
+
+.app-submit-wrapper:hover,
+.app-submit-wrapper:focus {
+  border-radius: 8px;
+  color: #61dafb;
+  border-color: #61dafbaa;
+}
+input.app-submit-left {
+  text-indent: 10px;
+  border: 1px;
+  border-radius: 8px 0 0 8px;
+}
+input.app-submit-left:focus {
+  outline: none;
+}
+
+button.app-submit-right {
+  border: 0;
+  border-radius: 0 8px 8px 0;
+}
+
+button.app-submit-right:not([disabled]):focus,
+button.app-submit-right:not([disabled]):active {
+  border: 0;
+  outline: none;
+}

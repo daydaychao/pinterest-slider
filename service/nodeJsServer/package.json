@@ -1,0 +1,25 @@
+{
+  "name": "playwright-service",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "scripts": {
+    "init": "npx playwright install",
+    "start": "yarn tsc --project ./tsconfig.json && yarn nodemon index.js",
+    "build": "yarn tsc --project ./tsconfig.json",
+    "test": "npx jest"
+  },
+  "dependencies": {
+    "@koa/cors": "^5.0.0",
+    "@types/jest": "^29.5.12",
+    "@types/koa": "^2.14.0",
+    "@types/node": "^20.11.17",
+    "dotenv": "^16.4.3",
+    "jest": "^29.7.0",
+    "koa": "^2.15.0",
+    "nodemon": "^3.0.3",
+    "playwright": "^1.41.2",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.3.3"
+  }
+}

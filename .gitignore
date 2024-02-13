@@ -1,0 +1,5 @@
+﻿.lh
+*/node_modules
+service/nodeJsServer/node_modules
+/service/nodeJsServer/.env
+/service/goServer/.env

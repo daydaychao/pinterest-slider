@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "outDir": "dist" // 將編譯後的文件輸出到 dist/ 資料夾
+    // 其他選項...
+  }
+}
